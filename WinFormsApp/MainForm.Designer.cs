@@ -51,7 +51,7 @@ namespace WinFormsApp1
             this.TrackBarColorG = new System.Windows.Forms.TrackBar();
             this.NumericUpDownWidth = new System.Windows.Forms.NumericUpDown();
             this.CheckBoxFill = new System.Windows.Forms.CheckBox();
-            this.ButtodAddPoint = new System.Windows.Forms.Button();
+            this.ButtonAddPoint = new System.Windows.Forms.Button();
             this.TextBoxAddPointX = new System.Windows.Forms.TextBox();
             this.TextBoxAddPointY = new System.Windows.Forms.TextBox();
             this.ButtonFinishPaint = new System.Windows.Forms.Button();
@@ -305,7 +305,12 @@ namespace WinFormsApp1
             this.NumericUpDownWidth.Location = new System.Drawing.Point(800, 320);
             this.NumericUpDownWidth.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.NumericUpDownWidth.Maximum = new decimal(new int[] {
+            99,
             0,
+            0,
+            0});
+            this.NumericUpDownWidth.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
@@ -313,12 +318,19 @@ namespace WinFormsApp1
             this.NumericUpDownWidth.Size = new System.Drawing.Size(50, 27);
             this.NumericUpDownWidth.TabIndex = 20;
             this.NumericUpDownWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NumericUpDownWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.NumericUpDownWidth.ValueChanged += new System.EventHandler(this.NumericUpDownWidth_ValueChanged);
             // 
             // CheckBoxFill
             // 
             this.CheckBoxFill.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckBoxFill.AutoSize = true;
+            this.CheckBoxFill.Checked = true;
+            this.CheckBoxFill.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CheckBoxFill.Location = new System.Drawing.Point(800, 385);
             this.CheckBoxFill.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.CheckBoxFill.Name = "CheckBoxFill";
@@ -327,17 +339,17 @@ namespace WinFormsApp1
             this.CheckBoxFill.UseVisualStyleBackColor = true;
             this.CheckBoxFill.CheckedChanged += new System.EventHandler(this.CheckBoxFill_CheckedChanged);
             // 
-            // ButtodAddPoint
+            // ButtonAddPoint
             // 
-            this.ButtodAddPoint.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.ButtodAddPoint.Location = new System.Drawing.Point(900, 500);
-            this.ButtodAddPoint.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.ButtodAddPoint.Name = "ButtodAddPoint";
-            this.ButtodAddPoint.Size = new System.Drawing.Size(40, 40);
-            this.ButtodAddPoint.TabIndex = 22;
-            this.ButtodAddPoint.Text = "OK";
-            this.ButtodAddPoint.UseVisualStyleBackColor = true;
-            this.ButtodAddPoint.Click += new System.EventHandler(this.ButtodAddPoint_Click);
+            this.ButtonAddPoint.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.ButtonAddPoint.Location = new System.Drawing.Point(900, 500);
+            this.ButtonAddPoint.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ButtonAddPoint.Name = "ButtonAddPoint";
+            this.ButtonAddPoint.Size = new System.Drawing.Size(40, 40);
+            this.ButtonAddPoint.TabIndex = 22;
+            this.ButtonAddPoint.Text = "OK";
+            this.ButtonAddPoint.UseVisualStyleBackColor = true;
+            this.ButtonAddPoint.Click += new System.EventHandler(this.ButtonAddPoint_Click);
             // 
             // TextBoxAddPointX
             // 
@@ -391,7 +403,7 @@ namespace WinFormsApp1
             this.Controls.Add(this.ButtonFinishPaint);
             this.Controls.Add(this.TextBoxAddPointY);
             this.Controls.Add(this.TextBoxAddPointX);
-            this.Controls.Add(this.ButtodAddPoint);
+            this.Controls.Add(this.ButtonAddPoint);
             this.Controls.Add(this.CheckBoxFill);
             this.Controls.Add(this.NumericUpDownWidth);
             this.Controls.Add(this.TrackBarColorB);
@@ -417,8 +429,7 @@ namespace WinFormsApp1
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimumSize = new System.Drawing.Size(1000, 800);
             this.Name = "FormMain";
-            this.Text = "Рисовалка";
-            this.Load += new System.EventHandler(this.FormMain_Load);
+            this.Text = "ShapeArt";
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxPaint)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarColorR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarColorB)).EndInit();
@@ -453,7 +464,7 @@ namespace WinFormsApp1
         private System.Windows.Forms.TrackBar TrackBarColorG;
         private System.Windows.Forms.NumericUpDown NumericUpDownWidth;
         private System.Windows.Forms.CheckBox CheckBoxFill;
-        private System.Windows.Forms.Button ButtodAddPoint;
+        private System.Windows.Forms.Button ButtonAddPoint;
         private System.Windows.Forms.TextBox TextBoxAddPointX;
         private System.Windows.Forms.TextBox TextBoxAddPointY;
         private System.Windows.Forms.Button ButtonFinishPaint;

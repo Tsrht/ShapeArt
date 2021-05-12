@@ -6,4 +6,9 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BasicFigures\BasicFigures.csproj" />
+    <ProjectReference Include="..\FiguresInfo\FiguresInfo.csproj" />
+  </ItemGroup>
+
 </Project>
