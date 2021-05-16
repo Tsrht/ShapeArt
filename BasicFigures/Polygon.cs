@@ -21,6 +21,11 @@ namespace BasicFigures
             {
                 if (Filled)
                 {
+                    if (Points.Count == 2)
+                    {
+
+                        graphics.DrawPolygon(Pen, Points.ToArray());
+                    }
                     graphics.FillPolygon(new SolidBrush(Pen.Color), Points.ToArray());
                 }
                 else

@@ -5,6 +5,10 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.IO;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using static Newtonsoft.Json.JsonConvert;
 
 namespace WinFormsApp1
 {
@@ -55,9 +59,10 @@ namespace WinFormsApp1
                 if (Info.CurrentFigure.IsFigureOkay())
                 {
                     Info.Figures.Add(Info.CurrentFigure);
+                    Info.Trash.Clear();
                 }
             }
-            if (Info.CurrentFabric != null)
+            if (!(Info.CurrentFabric is null))
             {
                 Info.CurrentFigure = Info.CurrentFabric.Produce();
             }
@@ -66,22 +71,86 @@ namespace WinFormsApp1
 
         private void ButtonOpen_Click(object sender, EventArgs e)
         {
-
+            OpenFileDialog dialog = new OpenFileDialog() { DefaultExt = ".json", Filter = "JSON Files (*.json)|*json", AddExtension = true };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string json;
+                    using (var fs = new FileStream(dialog.FileName, FileMode.Open))
+                    {
+                        var sr = new StreamReader(fs);
+                        json = sr.ReadToEnd();
+                        sr.Close();
+                    }
+                    List<Figure> figures = DeserializeObject<List<Figure>>(
+                        json,
+                        new JsonSerializerSettings()
+                        {
+                            TypeNameHandling = TypeNameHandling.All
+                        });
+                    if (!(figures is null))
+                    {
+                        FinishDrawing();
+                        Info.Trash.Clear();
+                        Info.Figures = figures;
+                        Redraw();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void ButtonSave_Click(object sender, EventArgs e)
         {
-
+            SaveFileDialog dialog = new SaveFileDialog() { DefaultExt = ".json", Filter = "JSON Files (*.json)|*json", AddExtension = true };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    using (var fs = new FileStream(dialog.FileName, FileMode.Create))
+                    {
+                        string json = SerializeObject(
+                            Info.Figures,
+                            Formatting.Indented,
+                            new JsonSerializerSettings()
+                            {
+                                TypeNameHandling = TypeNameHandling.All
+                            });
+                        var sw = new StreamWriter(fs);
+                        sw.Write(json);
+                        sw.Flush();
+                        sw.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Saving error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void ButtonUndo_Click(object sender, EventArgs e)
         {
-
+            if (Info.Figures.Count > 0)
+            {
+                Info.Trash.Add(Info.Figures.Last());
+                Info.Figures.RemoveAt(Info.Figures.Count - 1);
+                Redraw();
+            }
         }
 
         private void ButtonRedo_Click(object sender, EventArgs e)
         {
-
+            if (Info.Trash.Count > 0)
+            {
+                Info.Figures.Add(Info.Trash.Last());
+                Info.Trash.RemoveAt(Info.Trash.Count - 1);
+                Redraw();
+            }
         }
 
         private void ButtonLoadFigure_Click(object sender, EventArgs e)
@@ -148,6 +217,7 @@ namespace WinFormsApp1
         {
             FinishDrawing();
             Info.Figures.Clear();
+            Info.Trash.Clear();
             Redraw();
         }
 
@@ -165,7 +235,7 @@ namespace WinFormsApp1
 
         private void PictureBoxPaint_MouseDown(object sender, MouseEventArgs e)
         {
-            if (Info.CurrentFigure != null)
+            if (!(Info.CurrentFigure is null))
             {
                 if (e.Button == MouseButtons.Left)
                 {
@@ -178,6 +248,23 @@ namespace WinFormsApp1
                     FinishDrawing();
                 }
             }
+        }
+
+        private void PictureBoxPaint_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!(Info.CurrentFigure is null))
+            {
+                if (Info.CurrentFigure.TryAddPoint(e.Location))
+                {
+                    Redraw();
+                    Info.CurrentFigure.Points.RemoveAt(Info.CurrentFigure.Points.Count - 1);
+                }
+            }
+        }
+
+        private void PictureBoxPaint_MouseLeave(object sender, EventArgs e)
+        {
+            Redraw();
         }
     }
 }

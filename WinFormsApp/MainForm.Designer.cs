@@ -78,6 +78,8 @@ namespace WinFormsApp1
             this.PictureBoxPaint.TabStop = false;
             this.PictureBoxPaint.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBoxPaint_Paint);
             this.PictureBoxPaint.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxPaint_MouseDown);
+            this.PictureBoxPaint.MouseLeave += new System.EventHandler(this.PictureBoxPaint_MouseLeave);
+            this.PictureBoxPaint.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBoxPaint_MouseMove);
             // 
             // ButtonOpen
             // 
